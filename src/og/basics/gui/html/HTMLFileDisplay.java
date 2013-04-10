@@ -1,6 +1,7 @@
 package og.basics.gui.html;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -33,8 +34,11 @@ public class HTMLFileDisplay extends JPanel {
 		edit.addHyperlinkListener(new VerySimpleLinkListener(edit));
 
 		edit.setEditable(false);
-		final JScrollPane editorScrollPane = new JScrollPane(edit);
-		this.add(editorScrollPane, BorderLayout.CENTER);
+		final JScrollPane scroller = new JScrollPane(edit);
+		scroller.getViewport().setView(edit);
+		scroller.setPreferredSize(new Dimension(300, 300));
+
+		this.add(scroller, BorderLayout.CENTER);
 		this.setSize(200, 200);
 	}
 
