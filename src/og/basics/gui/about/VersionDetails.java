@@ -10,13 +10,18 @@ import javax.swing.ImageIcon;
  * 
  */
 public class VersionDetails {
-	private String version = "";
-	private String copyright = "";
-	private ImageIcon logo = null;
-	private String company = "";
-	private String date = "";
-	private String applicationname = "";
-	private String description = "";
+	private String				version			= "";
+	private String				copyright		= "";
+	private ImageIcon			logo			= null;
+	private String				company			= "";
+	private String				date			= "";
+	private String				applicationname	= "";
+	private String				description		= "";
+
+	final public static String	javaVersion		= System.getProperty("java.version");
+	final public static String	javaVendor		= System.getProperty("java.vendor");
+	final public static String	osName			= System.getProperty("os.name");
+	final public static String	osArch			= System.getProperty("os.arch");
 
 	public VersionDetails() {
 
@@ -26,7 +31,7 @@ public class VersionDetails {
 		return company;
 	}
 
-	public void setCompany(String company) {
+	public void setCompany(final String company) {
 		this.company = company;
 	}
 
@@ -34,7 +39,7 @@ public class VersionDetails {
 		return date;
 	}
 
-	public void setDate(String date) {
+	public void setDate(final String date) {
 		this.date = date;
 	}
 
@@ -42,7 +47,7 @@ public class VersionDetails {
 		return version;
 	}
 
-	public void setVersion(String version) {
+	public void setVersion(final String version) {
 		this.version = version;
 	}
 
@@ -50,7 +55,7 @@ public class VersionDetails {
 		return copyright;
 	}
 
-	public void setCopyright(String copyright) {
+	public void setCopyright(final String copyright) {
 		this.copyright = copyright;
 	}
 
@@ -58,7 +63,7 @@ public class VersionDetails {
 		return logo;
 	}
 
-	public void setLogo(ImageIcon logo) {
+	public void setLogo(final ImageIcon logo) {
 		this.logo = logo;
 	}
 
@@ -66,7 +71,7 @@ public class VersionDetails {
 		return applicationname;
 	}
 
-	public void setApplicationname(String applicationname) {
+	public void setApplicationname(final String applicationname) {
 		this.applicationname = applicationname;
 	}
 
@@ -76,7 +81,7 @@ public class VersionDetails {
 	 * 
 	 * @param description
 	 */
-	public void setDescription(String description) {
+	public void setDescription(final String description) {
 		this.description = description;
 	}
 

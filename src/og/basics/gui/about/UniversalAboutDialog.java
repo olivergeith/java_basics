@@ -5,16 +5,15 @@ import java.awt.Container;
 import java.awt.Frame;
 import java.awt.Insets;
 import java.awt.Rectangle;
-
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.border.EmptyBorder;
 
 public class UniversalAboutDialog extends JDialog {
-	private static final long serialVersionUID = 1L;
-	private final VersionDetails version;
+	private static final long		serialVersionUID	= 1L;
+	private final VersionDetails	version;
 
-	public UniversalAboutDialog(final Frame parent, VersionDetails version) {
+	public UniversalAboutDialog(final Frame parent, final VersionDetails version) {
 		super(parent);
 		this.version = version;
 		setModalityType(ModalityType.APPLICATION_MODAL);
@@ -29,9 +28,9 @@ public class UniversalAboutDialog extends JDialog {
 	 * Centers this Dialog on the Parent
 	 */
 	private void centerOnParent() {
-		Container c = getParent();
+		final Container c = getParent();
 		if (c != null) {
-			Rectangle cb = c.getBounds();
+			final Rectangle cb = c.getBounds();
 			this.setBounds(cb.x + cb.width / 2 - getWidth() / 2, cb.y + cb.height / 2 - getHeight() / 2, getWidth(), getHeight());
 		}
 	}
@@ -44,7 +43,7 @@ public class UniversalAboutDialog extends JDialog {
 		final JLabel logo = new JLabel();
 		logo.setIcon(version.getLogo());
 
-		String v = createVersionHtml();
+		final String v = createVersionHtml();
 		final JLabel version = new JLabel(v);
 		version.setBorder(new EmptyBorder(new Insets(10, 10, 10, 10)));
 
@@ -91,6 +90,8 @@ public class UniversalAboutDialog extends JDialog {
 		html += "<font size=3 color=black>";
 		html += "Version: " + version.getVersion() + "<br>";
 		html += "Date: " + version.getDate() + "<br>";
+		html += "Java Version: " + VersionDetails.javaVendor + " " + VersionDetails.javaVersion + "<br>";
+		html += "OS: " + VersionDetails.osName + " " + VersionDetails.osArch + "<br>";
 		html += "</font>";
 
 		html += "</html>";
