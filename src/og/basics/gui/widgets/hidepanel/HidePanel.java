@@ -28,8 +28,8 @@ public class HidePanel extends JPanel {
 	 */
 	public HidePanel(final String title, final Component compToBeHidden) {
 		super();
-		this.setLayout(new BorderLayout());
-		this.titleLable.setText(title);
+		setLayout(new BorderLayout());
+		titleLable.setText(title);
 		this.compToBeHidden = compToBeHidden;
 		initUI(true);
 	}
@@ -46,8 +46,8 @@ public class HidePanel extends JPanel {
 	 */
 	public HidePanel(final String title, final Component compToBeHidden, final boolean showInitially) {
 		super();
-		this.setLayout(new BorderLayout());
-		this.titleLable.setText(title);
+		setLayout(new BorderLayout());
+		titleLable.setText(title);
 		this.compToBeHidden = compToBeHidden;
 		initUI(showInitially);
 	}
@@ -79,22 +79,18 @@ public class HidePanel extends JPanel {
 		}
 	}
 
-	private void hideComp() {
+	public void hideComp() {
 		compToBeHidden.setVisible(false);
-		// remove(compToBeHidden);
 		titleLable.setIcon(CommonIconProvider.BUTTON_ICON_HIDDEN);
 		titleLable.setToolTipText("Show " + titleLable.getText());
 		setHidden(true);
-		// repaint();
 	}
 
-	private void unhideComp() {
+	public void unhideComp() {
 		compToBeHidden.setVisible(true);
-		// add(compToBeHidden, BorderLayout.CENTER);
 		titleLable.setIcon(CommonIconProvider.BUTTON_ICON_NOT_HIDDEN);
 		titleLable.setToolTipText("Hide " + titleLable.getText());
 		setHidden(false);
-		// repaint();
 	}
 
 	public String getTitle() {
@@ -102,14 +98,14 @@ public class HidePanel extends JPanel {
 	}
 
 	public void setTitle(final String title) {
-		this.titleLable.setText(title);
+		titleLable.setText(title);
 	}
 
 	public boolean isHidden() {
 		return hidden;
 	}
 
-	public void setHidden(final boolean hidden) {
+	private void setHidden(final boolean hidden) {
 		this.hidden = hidden;
 	}
 
