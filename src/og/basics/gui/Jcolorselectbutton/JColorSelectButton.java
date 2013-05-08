@@ -7,7 +7,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
@@ -29,7 +30,7 @@ public class JColorSelectButton extends JButton {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1405509065947842554L;
+	private static final long	serialVersionUID	= 1405509065947842554L;
 
 	/**
 	 * 
@@ -138,6 +139,7 @@ public class JColorSelectButton extends JButton {
 				System.out.println("OK Button");
 				System.out.println(colorChooser.getColor());
 				setBackground(colorChooser.getColor());
+				informListeners();
 			}
 		};
 
@@ -150,6 +152,61 @@ public class JColorSelectButton extends JButton {
 		final JDialog dialog = JColorChooser.createDialog(null, "Change Color", true, colorChooser, okActionListener, cancelActionListener);
 
 		dialog.setVisible(true);
+	}
+
+	// ##################################################################################
+	// ColorChangeListener
+	// ##################################################################################
+	/**
+	 * the listener who want to know about changes in Orgdata
+	 */
+	private final List<ColorChangeListener>	changeListeners	= new ArrayList<ColorChangeListener>();
+
+	/**
+	 * 
+	 * @return the List of {@link ColorChangeListener}
+	 */
+	public List<ColorChangeListener> getColorChangeListeners() {
+		synchronized (changeListeners) {
+			return changeListeners;
+		}
+	}
+
+	/**
+	 * Informing the subscribed listeners about updates
+	 */
+	protected void informListeners() {
+		for (final ColorChangeListener listener : getColorChangeListeners()) {
+			try {
+				listener.onChange(getColor());
+			} catch (final RuntimeException exc) {
+				System.out.println("dataReceived failed for listener " + listener);
+			}
+		}
+	}
+
+	/**
+	 * Adding {@link ColorChangeListener}
+	 * 
+	 * @param listener
+	 *            the {@link ColorChangeListener}
+	 */
+	public void addColorChangeListener(final ColorChangeListener listener) {
+		synchronized (changeListeners) {
+			changeListeners.add(listener);
+		}
+	}
+
+	/**
+	 * Removing {@link ColorChangeListener}
+	 * 
+	 * @param listener
+	 *            the {@link ColorChangeListener}
+	 */
+	public void removeColorChangeListener(final ColorChangeListener listener) {
+		synchronized (changeListeners) {
+			changeListeners.remove(listener);
+		}
 	}
 
 }
