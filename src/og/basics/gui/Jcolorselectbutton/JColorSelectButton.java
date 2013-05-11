@@ -135,8 +135,8 @@ public class JColorSelectButton extends JButton {
 		colorChooser.setChooserPanels(panelsnew);
 
 		final ActionListener okActionListener = new ActionListener() {
+			@Override
 			public void actionPerformed(final ActionEvent actionEvent) {
-				System.out.println("OK Button");
 				System.out.println(colorChooser.getColor());
 				setBackground(colorChooser.getColor());
 				informListeners();
@@ -144,6 +144,7 @@ public class JColorSelectButton extends JButton {
 		};
 
 		final ActionListener cancelActionListener = new ActionListener() {
+			@Override
 			public void actionPerformed(final ActionEvent actionEvent) {
 				System.out.println("Cancel Button");
 			}
