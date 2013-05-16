@@ -6,17 +6,24 @@ import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
-import og.basics.gui.icon.CommonIconProvider;
 
 public class HidePanel extends JPanel {
-	private static final long	serialVersionUID	= 874303619702233532L;
-	private final JLabel		titleLable			= new JLabel();
-	private boolean				hidden				= false;
-	private final Component		compToBeHidden;
+	private static final Color		HEADER_COLOR			= Color.GRAY.brighter();
+	private static final long		serialVersionUID		= 874303619702233532L;
+	private final JLabel			titleLable				= new JLabel();
+	private boolean					hidden					= false;
+	private final Component			compToBeHidden;
+
+	private final JLabel			emptyComp				= new JLabel(" ...");
+
+	private static final ImageIcon	BUTTON_ICON_HIDDEN		= new ImageIcon(HidePanel.class.getResource("hidden16.png"));
+	private static final ImageIcon	BUTTON_ICON_NOT_HIDDEN	= new ImageIcon(HidePanel.class.getResource("not_hidden16.png"));
 
 	/**
 	 * constructs a HidePanel the compToBeHidden will be shown initially
@@ -53,6 +60,7 @@ public class HidePanel extends JPanel {
 	}
 
 	private void initUI(final boolean showInitially) {
+		emptyComp.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 9));
 		titleLable.addMouseListener(new MouseAdapter() {
 
 			@Override
@@ -69,26 +77,34 @@ public class HidePanel extends JPanel {
 		titleLable.setBorder(new BevelBorder(2));
 		final JPanel p = new JPanel(new BorderLayout());
 		p.add(titleLable, BorderLayout.CENTER);
-		p.setBackground(Color.GRAY.brighter());
+		p.setBackground(HEADER_COLOR);
 		this.add(p, BorderLayout.NORTH);
 		add(compToBeHidden, BorderLayout.CENTER);
+		add(emptyComp, BorderLayout.SOUTH);
+
+		final JPanel p2 = new JPanel(new BorderLayout());
+		p2.setBackground(HEADER_COLOR);
+		add(p2, BorderLayout.WEST);
 		if (showInitially == true) {
 			unhideComp();
 		} else {
 			hideComp();
 		}
+		this.setBorder(BorderFactory.createEmptyBorder(0, 0, 2, 0));
 	}
 
 	public void hideComp() {
 		compToBeHidden.setVisible(false);
-		titleLable.setIcon(CommonIconProvider.BUTTON_ICON_HIDDEN);
+		emptyComp.setVisible(true);
+		titleLable.setIcon(BUTTON_ICON_HIDDEN);
 		titleLable.setToolTipText("Show " + titleLable.getText());
 		setHidden(true);
 	}
 
 	public void unhideComp() {
 		compToBeHidden.setVisible(true);
-		titleLable.setIcon(CommonIconProvider.BUTTON_ICON_NOT_HIDDEN);
+		emptyComp.setVisible(false);
+		titleLable.setIcon(BUTTON_ICON_NOT_HIDDEN);
 		titleLable.setToolTipText("Hide " + titleLable.getText());
 		setHidden(false);
 	}
