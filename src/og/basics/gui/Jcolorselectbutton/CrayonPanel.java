@@ -35,7 +35,6 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.Icon;
@@ -46,14 +45,15 @@ import javax.swing.colorchooser.AbstractColorChooserPanel;
 
 /* Used by ColorChooserDemo2.java. */
 public class CrayonPanel extends AbstractColorChooserPanel implements ActionListener {
-	private static final long serialVersionUID = 2389524499578003673L;
-	JToggleButton yellowCrayon;
-	JToggleButton orangeCrayon;
-	JToggleButton redCrayon;
-	JToggleButton greenCrayon;
-	JToggleButton blueAOKPCrayon;
-	JToggleButton blueAOKPCrayonlight;
-	JToggleButton darkgrayCrayon;
+	private static final long	serialVersionUID	= 2389524499578003673L;
+	JToggleButton				yellowCrayon;
+	JToggleButton				orangeCrayon;
+	JToggleButton				redCrayon;
+	JToggleButton				greenCrayon;
+	JToggleButton				greenCrayonSamsung;
+	JToggleButton				blueAOKPCrayon;
+	JToggleButton				blueAOKPCrayonlight;
+	JToggleButton				darkgrayCrayon;
 
 	@Override
 	public void updateChooser() {
@@ -67,6 +67,8 @@ public class CrayonPanel extends AbstractColorChooserPanel implements ActionList
 			yellowCrayon.setSelected(true);
 		} else if (Color.green.equals(color)) {
 			greenCrayon.setSelected(true);
+		} else if (greenCrayonSamsung.getBackground().equals(color)) {
+			greenCrayonSamsung.setSelected(true);
 		} else if (blueAOKPCrayon.getBackground().equals(color)) {
 			blueAOKPCrayon.setSelected(true);
 		} else if (blueAOKPCrayonlight.getBackground().equals(color)) {
@@ -108,6 +110,10 @@ public class CrayonPanel extends AbstractColorChooserPanel implements ActionList
 		boxOfCrayons.add(greenCrayon);
 		add(greenCrayon);
 
+		greenCrayonSamsung = createCrayon("Samsung green", border, new Color(142, 205, 0));
+		boxOfCrayons.add(greenCrayonSamsung);
+		add(greenCrayonSamsung);
+
 		blueAOKPCrayon = createCrayon("AOKP blue", border, new Color(39, 135, 173));
 		boxOfCrayons.add(blueAOKPCrayon);
 		add(blueAOKPCrayon);
@@ -121,6 +127,7 @@ public class CrayonPanel extends AbstractColorChooserPanel implements ActionList
 		add(darkgrayCrayon);
 	}
 
+	@Override
 	public void actionPerformed(final ActionEvent e) {
 		Color newColor = null;
 		final JToggleButton toggle = (JToggleButton) e.getSource();
