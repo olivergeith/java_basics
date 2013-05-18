@@ -13,10 +13,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-
 import sun.awt.image.BufferedImageGraphicsConfig;
 
 public class StaticImageHelper {
@@ -155,7 +153,7 @@ public class StaticImageHelper {
 	 * @param image
 	 * @return
 	 */
-	private static BufferedImage blurImage(final BufferedImage image) {
+	public static BufferedImage blurImage(final BufferedImage image) {
 		final float ninth = 1.0f / 9.0f;
 		final float[] blurKernel = {
 				ninth, ninth, ninth, ninth, ninth, ninth, ninth, ninth, ninth
@@ -168,6 +166,51 @@ public class StaticImageHelper {
 
 		final RenderingHints hints = new RenderingHints(map);
 		final BufferedImageOp op = new ConvolveOp(new Kernel(3, 3, blurKernel), ConvolveOp.EDGE_NO_OP, hints);
+		return op.filter(image, null);
+	}
+
+	/**
+	 * Blurrs an {@link BufferedImage}
+	 * 
+	 * @param image
+	 * @return
+	 */
+	public static BufferedImage blurImage16(final BufferedImage image) {
+		final float ninth = 1.0f / 16.0f;
+		final float[] blurKernel = {
+				ninth, ninth, ninth, ninth, ninth, ninth, ninth, ninth, ninth, ninth, ninth, ninth, ninth, ninth, ninth, ninth
+		};
+
+		final Map<RenderingHints.Key, Object> map = new HashMap<RenderingHints.Key, Object>();
+		map.put(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+		map.put(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+		map.put(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+		final RenderingHints hints = new RenderingHints(map);
+		final BufferedImageOp op = new ConvolveOp(new Kernel(4, 4, blurKernel), ConvolveOp.EDGE_NO_OP, hints);
+		return op.filter(image, null);
+	}
+
+	/**
+	 * Blurrs an {@link BufferedImage}
+	 * 
+	 * @param image
+	 * @return
+	 */
+	public static BufferedImage blurImage25(final BufferedImage image) {
+		final float ninth = 1.0f / 16.0f;
+		final float[] blurKernel = {
+				ninth, ninth, ninth, ninth, ninth, ninth, ninth, ninth, ninth, ninth, ninth, ninth, ninth, ninth, ninth, ninth, ninth, ninth, ninth, ninth,
+				ninth, ninth, ninth, ninth, ninth
+		};
+
+		final Map<RenderingHints.Key, Object> map = new HashMap<RenderingHints.Key, Object>();
+		map.put(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+		map.put(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+		map.put(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+		final RenderingHints hints = new RenderingHints(map);
+		final BufferedImageOp op = new ConvolveOp(new Kernel(5, 5, blurKernel), ConvolveOp.EDGE_NO_OP, hints);
 		return op.filter(image, null);
 	}
 
