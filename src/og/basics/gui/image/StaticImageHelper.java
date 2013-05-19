@@ -198,10 +198,65 @@ public class StaticImageHelper {
 	 * @return
 	 */
 	public static BufferedImage blurImage25(final BufferedImage image) {
-		final float ninth = 1.0f / 16.0f;
+		final float ninth = 1.0f / 21.0f; // should be 25
 		final float[] blurKernel = {
-				ninth, ninth, ninth, ninth, ninth, ninth, ninth, ninth, ninth, ninth, ninth, ninth, ninth, ninth, ninth, ninth, ninth, ninth, ninth, ninth,
+				ninth, ninth, ninth, ninth, ninth, //
+				ninth, ninth, ninth, ninth, ninth, //
+				ninth, ninth, ninth, ninth, ninth, //
+				ninth, ninth, ninth, ninth, ninth, //
 				ninth, ninth, ninth, ninth, ninth
+		};
+
+		final Map<RenderingHints.Key, Object> map = new HashMap<RenderingHints.Key, Object>();
+		map.put(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+		map.put(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+		map.put(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+		final RenderingHints hints = new RenderingHints(map);
+		final BufferedImageOp op = new ConvolveOp(new Kernel(5, 5, blurKernel), ConvolveOp.EDGE_NO_OP, hints);
+		return op.filter(image, null);
+	}
+
+	/**
+	 * Blurrs an {@link BufferedImage}
+	 * 
+	 * @param image
+	 * @return
+	 */
+	public static BufferedImage blurImage25a(final BufferedImage image) {
+		final float ninth = 1.0f / 13.0f; // should be 13
+		final float[] blurKernel = {
+				0, 0, ninth, 0, 0, //
+				0, ninth, ninth, ninth, 0, //
+				ninth, ninth, ninth, ninth, ninth, //
+				0, ninth, ninth, ninth, 0, //
+				0, 0, ninth, 0, 0
+		};
+
+		final Map<RenderingHints.Key, Object> map = new HashMap<RenderingHints.Key, Object>();
+		map.put(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+		map.put(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+		map.put(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+		final RenderingHints hints = new RenderingHints(map);
+		final BufferedImageOp op = new ConvolveOp(new Kernel(5, 5, blurKernel), ConvolveOp.EDGE_NO_OP, hints);
+		return op.filter(image, null);
+	}
+
+	/**
+	 * Blurrs an {@link BufferedImage}
+	 * 
+	 * @param image
+	 * @return
+	 */
+	public static BufferedImage blurImage25b(final BufferedImage image, final int intensity) {
+		final float ninth = 1.0f / (13.0f - intensity); // should be 13
+		final float[] blurKernel = {
+				0, 0, ninth, 0, 0, //
+				0, ninth, ninth, ninth, 0, //
+				ninth, ninth, ninth, ninth, ninth, //
+				0, ninth, ninth, ninth, 0, //
+				0, 0, ninth, 0, 0
 		};
 
 		final Map<RenderingHints.Key, Object> map = new HashMap<RenderingHints.Key, Object>();
