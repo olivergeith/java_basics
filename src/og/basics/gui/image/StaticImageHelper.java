@@ -1,6 +1,8 @@
 package og.basics.gui.image;
 
 import java.awt.AlphaComposite;
+import java.awt.Color;
+import java.awt.GradientPaint;
 import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
 import java.awt.RenderingHints;
@@ -284,6 +286,61 @@ public class StaticImageHelper {
 		g2.drawRenderedImage(image, null);
 		g2.dispose();
 		return result;
+	}
+
+	// ####################################################################
+	// Image Flipping
+	// ####################################################################
+
+	public static BufferedImage horizontalflip(final BufferedImage img) {
+		final int w = img.getWidth();
+		final int h = img.getHeight();
+		final BufferedImage dimg = new BufferedImage(w, h, img.getType());
+		final Graphics2D g = dimg.createGraphics();
+		g.drawImage(img, 0, 0, w, h, w, 0, 0, h, null);
+		g.dispose();
+		return dimg;
+	}
+
+	public static BufferedImage verticalflip(final BufferedImage img) {
+		final int w = img.getWidth();
+		final int h = img.getHeight();
+		final BufferedImage dimg = new BufferedImage(w, h, img.getColorModel().getTransparency());
+		final Graphics2D g = dimg.createGraphics();
+		g.drawImage(img, 0, 0, w, h, 0, h, w, 0, null);
+		g.dispose();
+		return dimg;
+	}
+
+	public static BufferedImage rotate(final BufferedImage img, final int angle) {
+		final int w = img.getWidth();
+		final int h = img.getHeight();
+		final BufferedImage dimg = new BufferedImage(w, h, img.getType());
+		final Graphics2D g = dimg.createGraphics();
+		g.rotate(Math.toRadians(angle), w / 2, h / 2);
+		g.drawImage(img, null, 0, 0);
+		g.dispose();
+		return dimg;
+	}
+
+	public static BufferedImage fadeImage(final BufferedImage img) {
+		final BufferedImage reflection = new BufferedImage(img.getWidth(), img.getHeight(), BufferedImage.TYPE_INT_ARGB);
+		final Graphics2D g = reflection.createGraphics();
+		g.drawRenderedImage(img, null);
+		g.setComposite(AlphaComposite.getInstance(AlphaComposite.DST_IN));
+		g.setPaint(new GradientPaint(0, Math.round(img.getHeight() * 8f / 10f), new Color(0.0f, 0.0f, 0.0f, 0.0f), 0, 0, new Color(0.0f, 0.0f, 0.0f, 0.5f)));
+
+		g.fillRect(0, 0, img.getWidth(), img.getHeight());
+		g.dispose();
+		return reflection;
+	}
+
+	public static BufferedImage createReflectionImage(final BufferedImage img, final boolean blur) {
+		BufferedImage flip = StaticImageHelper.verticalflip(img);
+		if (blur)
+			flip = StaticImageHelper.blurImage(flip);
+		flip = StaticImageHelper.fadeImage(flip);
+		return flip;
 	}
 
 }
