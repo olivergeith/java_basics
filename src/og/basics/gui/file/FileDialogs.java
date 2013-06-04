@@ -2,7 +2,6 @@ package og.basics.gui.file;
 
 import java.awt.Dimension;
 import java.io.File;
-
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
 
@@ -70,6 +69,43 @@ public class FileDialogs {
 			@Override
 			public boolean accept(final File f) {
 				return f.getName().endsWith(filter);
+			}
+		});
+		chooser.setVisible(true);
+
+		final int result = chooser.showOpenDialog(null);
+		if (result == JFileChooser.APPROVE_OPTION) {
+			final File selected = chooser.getSelectedFile();
+			return selected;
+		} else {
+			chooser.setVisible(false);
+		}
+		return null;
+	}
+
+	/**
+	 * Öffnet einen File-Opendialog für Dateien
+	 * 
+	 * @param startDir
+	 * @param title
+	 * @return
+	 */
+	public static File chooseFileFree(final File startDir, final String filter, final String description) {
+		final JFileChooser chooser = new JFileChooser(startDir);
+		chooser.setPreferredSize(new Dimension(800, 600));
+		chooser.setDialogType(JFileChooser.OPEN_DIALOG);
+		chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+		chooser.setAcceptAllFileFilterUsed(true);
+		chooser.setFileFilter(new FileFilter() {
+
+			@Override
+			public String getDescription() {
+				return description;
+			}
+
+			@Override
+			public boolean accept(final File f) {
+				return f.getName().endsWith(filter) || f.isDirectory();
 			}
 		});
 		chooser.setVisible(true);
