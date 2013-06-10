@@ -35,7 +35,6 @@ import java.awt.event.WindowListener;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.Date;
-
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -48,13 +47,13 @@ import javax.swing.border.TitledBorder;
  * Tracks Memory allocated & used, displayed in graph form.
  */
 public class MemoryMonitor extends JPanel {
-	private static final long serialVersionUID = 1L;
-	static JCheckBox dateStampCB = new JCheckBox("Output Date Stamp");
-	public Surface surf;
-	JPanel controls;
-	boolean doControls = false;
-	JTextField tf;
-	JTextField maxmem;
+	private static final long	serialVersionUID	= 1L;
+	static JCheckBox			dateStampCB			= new JCheckBox("Output Date Stamp");
+	public Surface				surf;
+	JPanel						controls;
+	boolean						doControls			= false;
+	JTextField					tf;
+	JTextField					maxmem;
 
 	/**
 	 * Konstruktor
@@ -80,7 +79,7 @@ public class MemoryMonitor extends JPanel {
 		controls.add(label = new JLabel("MaxMemory (KB):"));
 		label.setFont(font);
 		label.setForeground(Color.blue);
-		maxmem = new JTextField("64000");
+		maxmem = new JTextField("1024000");
 		maxmem.setFont(font);
 		maxmem.setForeground(Color.blue);
 		maxmem.setPreferredSize(new Dimension(60, 20));
@@ -128,26 +127,26 @@ public class MemoryMonitor extends JPanel {
 	 * 
 	 */
 	private class Surface extends JPanel implements Runnable {
-		private static final long serialVersionUID = 1L;
-		public Thread thread;
-		public long sleepAmount = 500;
-		public float maxMemory = (float) 64000.0 * 1024;
-		private int w, h;
-		private BufferedImage bimg;
-		private Graphics2D big;
-		private final Font font = new Font("Times New Roman", Font.PLAIN, 11);
-		private final Runtime r = Runtime.getRuntime();
-		private int pts[];
-		private int pts1[];
-		private int ptNum;
-		private int ptNum1;
-		private int ascent, descent;
-		private final Rectangle graphOutlineRect = new Rectangle();
-		private final Rectangle2D mfRect = new Rectangle2D.Float();
-		private final Rectangle2D muRect = new Rectangle2D.Float();
-		private final Color graphColor = new Color(46, 139, 87);
-		private final Color mfColor = new Color(0, 100, 0);
-		private String usedStr;
+		private static final long	serialVersionUID	= 1L;
+		public Thread				thread;
+		public long					sleepAmount			= 500;
+		public float				maxMemory			= (float) 1024000.0 * 1024;
+		private int					w, h;
+		private BufferedImage		bimg;
+		private Graphics2D			big;
+		private final Font			font				= new Font("Times New Roman", Font.PLAIN, 11);
+		private final Runtime		r					= Runtime.getRuntime();
+		private int					pts[];
+		private int					pts1[];
+		private int					ptNum;
+		private int					ptNum1;
+		private int					ascent, descent;
+		private final Rectangle		graphOutlineRect	= new Rectangle();
+		private final Rectangle2D	mfRect				= new Rectangle2D.Float();
+		private final Rectangle2D	muRect				= new Rectangle2D.Float();
+		private final Color			graphColor			= new Color(46, 139, 87);
+		private final Color			mfColor				= new Color(0, 100, 0);
+		private String				usedStr;
 
 		public Surface() {
 			setBackground(Color.black);
@@ -333,6 +332,7 @@ public class MemoryMonitor extends JPanel {
 			notify();
 		}
 
+		@Override
 		public void run() {
 
 			final Thread me = Thread.currentThread();
