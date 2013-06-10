@@ -35,17 +35,19 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JToggleButton;
-import javax.swing.border.Border;
 import javax.swing.colorchooser.AbstractColorChooserPanel;
 
 /* Used by ColorChooserDemo2.java. */
 public class CrayonPanel extends AbstractColorChooserPanel implements ActionListener {
 	private static final long	serialVersionUID	= 2389524499578003673L;
+	final ButtonGroup			boxOfCrayons		= new ButtonGroup();
 	JToggleButton				yellowCrayon;
 	JToggleButton				orangeCrayon;
 	JToggleButton				redCrayon;
@@ -55,28 +57,19 @@ public class CrayonPanel extends AbstractColorChooserPanel implements ActionList
 	JToggleButton				blueAOKPCrayonlight;
 	JToggleButton				darkgrayCrayon;
 
+	List<JToggleButton>			buttons				= new ArrayList<JToggleButton>();
+
 	@Override
 	public void updateChooser() {
 		final Color color = getColorFromModel();
-
-		if (Color.red.equals(color)) {
-			redCrayon.setSelected(true);
-		} else if (Color.orange.equals(color)) {
-			orangeCrayon.setSelected(true);
-		} else if (Color.yellow.equals(color)) {
-			yellowCrayon.setSelected(true);
-		} else if (Color.green.equals(color)) {
-			greenCrayon.setSelected(true);
-		} else if (greenCrayonSamsung.getBackground().equals(color)) {
-			greenCrayonSamsung.setSelected(true);
-		} else if (blueAOKPCrayon.getBackground().equals(color)) {
-			blueAOKPCrayon.setSelected(true);
-		} else if (blueAOKPCrayonlight.getBackground().equals(color)) {
-			blueAOKPCrayonlight.setSelected(true);
+		for (final JToggleButton button : buttons) {
+			if (button.getBackground().equals(color))
+				button.setSelected(true);
+			return;
 		}
 	}
 
-	protected JToggleButton createCrayon(final String name, final Border normalBorder, final Color col) {
+	protected JToggleButton createCrayon(final String name, final Color col) {
 		final JToggleButton crayon = new JToggleButton();
 		crayon.setActionCommand(name);
 		crayon.addActionListener(this);
@@ -84,6 +77,9 @@ public class CrayonPanel extends AbstractColorChooserPanel implements ActionList
 		crayon.setHorizontalAlignment(JButton.HORIZONTAL);
 		crayon.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		crayon.setBackground(col);
+		buttons.add(crayon);
+		boxOfCrayons.add(crayon);
+		add(crayon);
 		return crayon;
 	}
 
@@ -91,40 +87,21 @@ public class CrayonPanel extends AbstractColorChooserPanel implements ActionList
 	protected void buildChooser() {
 		setLayout(new GridLayout(0, 1));
 
-		final ButtonGroup boxOfCrayons = new ButtonGroup();
-		final Border border = BorderFactory.createEmptyBorder(4, 4, 4, 4);
-
-		yellowCrayon = createCrayon("yellow", border, Color.yellow);
-		boxOfCrayons.add(yellowCrayon);
-		add(yellowCrayon);
-
-		orangeCrayon = createCrayon("orange", border, Color.orange);
-		boxOfCrayons.add(orangeCrayon);
-		add(orangeCrayon);
-
-		redCrayon = createCrayon("red", border, Color.red);
-		boxOfCrayons.add(redCrayon);
-		add(redCrayon);
-
-		greenCrayon = createCrayon("green", border, Color.green.darker());
-		boxOfCrayons.add(greenCrayon);
-		add(greenCrayon);
-
-		greenCrayonSamsung = createCrayon("Samsung green", border, new Color(142, 205, 0));
-		boxOfCrayons.add(greenCrayonSamsung);
-		add(greenCrayonSamsung);
-
-		blueAOKPCrayon = createCrayon("AOKP blue", border, new Color(39, 135, 173));
-		boxOfCrayons.add(blueAOKPCrayon);
-		add(blueAOKPCrayon);
-
-		blueAOKPCrayonlight = createCrayon("AOKP blue (light)", border, new Color(51, 181, 229));
-		boxOfCrayons.add(blueAOKPCrayonlight);
-		add(blueAOKPCrayonlight);
-
-		darkgrayCrayon = createCrayon("Dark Gray", border, Color.darkGray);
-		boxOfCrayons.add(darkgrayCrayon);
-		add(darkgrayCrayon);
+		createCrayon("yellow", Color.yellow);
+		createCrayon("orange", Color.orange);
+		createCrayon("red", Color.red);
+		createCrayon("green", Color.green.darker());
+		createCrayon("Samsung green", new Color(142, 205, 0));
+		createCrayon("AOKP blue", new Color(39, 135, 173));
+		createCrayon("AOKP blue (light)", new Color(51, 181, 229));
+		createCrayon("Dark Gray", Color.darkGray);
+		createCrayon("Kroz HueBlue", new Color(51, 136, 255));
+		createCrayon("Kroz HueCyan", new Color(51, 229, 229));
+		createCrayon("Kroz HueBrown", new Color(170, 136, 85));
+		createCrayon("Kroz HueGreen", new Color(153, 204, 0));
+		createCrayon("Kroz HueOrange", new Color(255, 136, 0));
+		createCrayon("Kroz HuePink", new Color(255, 170, 204));
+		createCrayon("Kroz HuePurple", new Color(170, 102, 204));
 	}
 
 	@Override
