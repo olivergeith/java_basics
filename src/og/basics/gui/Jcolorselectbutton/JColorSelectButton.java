@@ -152,7 +152,7 @@ public class JColorSelectButton extends JButton {
 			}
 		};
 
-		final JDialog dialog = JColorChooser.createDialog(null, "Change Color", true, colorChooser, okActionListener, cancelActionListener);
+		final JDialog dialog = JColorChooser.createDialog(this, "Change Color", true, colorChooser, okActionListener, cancelActionListener);
 
 		dialog.setVisible(true);
 	}

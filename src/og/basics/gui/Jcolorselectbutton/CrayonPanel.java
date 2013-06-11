@@ -31,24 +31,35 @@ package og.basics.gui.Jcolorselectbutton;
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 import javax.swing.colorchooser.AbstractColorChooserPanel;
+import og.basics.util.StaticExecutor;
 
 /* Used by ColorChooserDemo2.java. */
 public class CrayonPanel extends AbstractColorChooserPanel implements ActionListener {
-	private static final long	serialVersionUID	= 2389524499578003673L;
-	final ButtonGroup			boxOfCrayons		= new ButtonGroup();
-	List<JToggleButton>			buttons				= new ArrayList<JToggleButton>();
+	private static final long		serialVersionUID	= 2389524499578003673L;
+	final ButtonGroup				boxOfCrayons		= new ButtonGroup();
+	List<JToggleButton>				buttons				= new ArrayList<JToggleButton>();
+
+	private final JPanel			buttonPanel			= new JPanel(new GridLayout(0, 1));
+	private static final ImageIcon	icon				= new ImageIcon(CrayonPanel.class.getResource("crayons.png"));
+	private final JLabel			logoLabel			= new JLabel();
 
 	@Override
 	public void updateChooser() {
@@ -68,16 +79,41 @@ public class CrayonPanel extends AbstractColorChooserPanel implements ActionList
 		crayon.setHorizontalAlignment(JButton.HORIZONTAL);
 		crayon.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		crayon.setBackground(col);
+		// optimizing foregroundcolor for better readability
+		final int howdark = col.getRed() + col.getGreen() + col.getBlue();
+		if (howdark < (3 * 255) / 3)
+			crayon.setForeground(Color.white);
+		else
+			crayon.setForeground(Color.black);
+
 		buttons.add(crayon);
 		boxOfCrayons.add(crayon);
-		add(crayon);
+		buttonPanel.add(crayon);
 		return crayon;
 	}
 
 	@Override
 	protected void buildChooser() {
-		setLayout(new GridLayout(0, 1));
+		setLayout(new BorderLayout());
+		add(buttonPanel, BorderLayout.CENTER);
+		logoLabel.setIcon(getIcon());
+		logoLabel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(final MouseEvent e) {
+				StaticExecutor.openUrlInExternalBrowser(getUrl());
+			}
+		});
+		logoLabel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+		add(logoLabel, BorderLayout.WEST);
 
+		addColors();
+	}
+
+	protected String getUrl() {
+		return null;
+	}
+
+	protected void addColors() {
 		createCrayon("yellow", Color.yellow);
 		createCrayon("orange", Color.orange);
 		createCrayon("red", Color.red);
@@ -109,5 +145,9 @@ public class CrayonPanel extends AbstractColorChooserPanel implements ActionList
 	@Override
 	public Icon getLargeDisplayIcon() {
 		return null;
+	}
+
+	protected ImageIcon getIcon() {
+		return icon;
 	}
 }

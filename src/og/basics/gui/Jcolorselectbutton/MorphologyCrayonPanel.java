@@ -1,15 +1,15 @@
 package og.basics.gui.Jcolorselectbutton;
 
 import java.awt.Color;
-import java.awt.GridLayout;
+import javax.swing.ImageIcon;
 
 public class MorphologyCrayonPanel extends CrayonPanel {
-	private static final long	serialVersionUID	= 1L;
+	private static final long		serialVersionUID	= 1L;
+
+	private static final ImageIcon	icon				= new ImageIcon(CrayonPanel.class.getResource("Morphology.png"));
 
 	@Override
-	protected void buildChooser() {
-		setLayout(new GridLayout(0, 1));
-
+	protected void addColors() {
 		createCrayon("Morphology Red", new Color(0xff0019));
 		createCrayon("Morphology Green", new Color(0xbbfa00));
 		createCrayon("Morphology Neon Green", new Color(0x03fc03));
@@ -23,6 +23,11 @@ public class MorphologyCrayonPanel extends CrayonPanel {
 	@Override
 	public String getDisplayName() {
 		return "Morphology Colors";
+	}
+
+	@Override
+	protected ImageIcon getIcon() {
+		return icon;
 	}
 
 }
