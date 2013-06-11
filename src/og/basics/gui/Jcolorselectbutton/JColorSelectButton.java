@@ -125,12 +125,14 @@ public class JColorSelectButton extends JButton {
 
 		final AbstractColorChooserPanel[] panels = colorChooser.getChooserPanels();
 
-		final AbstractColorChooserPanel[] panelsnew = new AbstractColorChooserPanel[panels.length + 1];
+		final AbstractColorChooserPanel[] panelsnew = new AbstractColorChooserPanel[panels.length + 3];
 
 		for (int i = 0; i < panels.length; i++) {
 			panelsnew[i] = panels[i];
 		}
 		panelsnew[panels.length] = new CrayonPanel();
+		panelsnew[panels.length + 1] = new KrozCrayonPanel();
+		panelsnew[panels.length + 2] = new MorphologyCrayonPanel();
 
 		colorChooser.setChooserPanels(panelsnew);
 

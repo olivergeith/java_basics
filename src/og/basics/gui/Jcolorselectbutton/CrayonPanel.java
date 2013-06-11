@@ -48,15 +48,6 @@ import javax.swing.colorchooser.AbstractColorChooserPanel;
 public class CrayonPanel extends AbstractColorChooserPanel implements ActionListener {
 	private static final long	serialVersionUID	= 2389524499578003673L;
 	final ButtonGroup			boxOfCrayons		= new ButtonGroup();
-	JToggleButton				yellowCrayon;
-	JToggleButton				orangeCrayon;
-	JToggleButton				redCrayon;
-	JToggleButton				greenCrayon;
-	JToggleButton				greenCrayonSamsung;
-	JToggleButton				blueAOKPCrayon;
-	JToggleButton				blueAOKPCrayonlight;
-	JToggleButton				darkgrayCrayon;
-
 	List<JToggleButton>			buttons				= new ArrayList<JToggleButton>();
 
 	@Override
@@ -95,13 +86,6 @@ public class CrayonPanel extends AbstractColorChooserPanel implements ActionList
 		createCrayon("AOKP blue", new Color(39, 135, 173));
 		createCrayon("AOKP blue (light)", new Color(51, 181, 229));
 		createCrayon("Dark Gray", Color.darkGray);
-		createCrayon("Kroz HueBlue", new Color(51, 136, 255));
-		createCrayon("Kroz HueCyan", new Color(51, 229, 229));
-		createCrayon("Kroz HueBrown", new Color(170, 136, 85));
-		createCrayon("Kroz HueGreen", new Color(153, 204, 0));
-		createCrayon("Kroz HueOrange", new Color(255, 136, 0));
-		createCrayon("Kroz HuePink", new Color(255, 170, 204));
-		createCrayon("Kroz HuePurple", new Color(170, 102, 204));
 	}
 
 	@Override
