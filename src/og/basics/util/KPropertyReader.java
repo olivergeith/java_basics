@@ -52,8 +52,8 @@ import java.util.StringTokenizer;
  */
 public class KPropertyReader {
 	// Members
-	private String myFile = new String("");
-	private final Properties prop = new Properties();
+	private String				myFile	= new String("");
+	private final Properties	prop	= new Properties();
 
 	/**
 	 * Konstruktor Falls File nicht existiert, wird es auf wunsch erzeugt, falls
@@ -324,7 +324,7 @@ public class KPropertyReader {
 	public void writeColorProperty(final String pKey, // Keywert
 			final Color pValue) // Value des Keys
 	{
-		writeProperty(pKey, pValue.getRed() + "," + pValue.getGreen() + "," + pValue.getBlue());
+		writeProperty(pKey, pValue.getRed() + "," + pValue.getGreen() + "," + pValue.getBlue() + "," + pValue.getAlpha());
 	}
 
 	/**
@@ -337,23 +337,37 @@ public class KPropertyReader {
 	public Color readColorProperty(final String pKey, // Keywert
 			final Color pDefault) // Default, falls er nicht gefunden wird
 	{
-		int r = 0, g = 0, b = 0;
-		final String temp = readProperty(pKey, pDefault.getRed() + "," + pDefault.getGreen() + "," + pDefault.getBlue());
+		int r = 0, g = 0, b = 0, a = 0;
+		final String temp = readProperty(pKey, pDefault.getRed() + "," + pDefault.getGreen() + "," + pDefault.getBlue() + "," + pDefault.getAlpha());
 		// Tokenizer initialisieren
 		final StringTokenizer tokenizer = new StringTokenizer(temp, ",", false);
 		// Daten lesen in einen Vector einlesen
-		if (tokenizer.countTokens() != 3)
-			return pDefault;
 		Color c = pDefault;
-		try {
-			r = Integer.parseInt(tokenizer.nextToken());
-			g = Integer.parseInt(tokenizer.nextToken());
-			b = Integer.parseInt(tokenizer.nextToken());
-			c = new Color(r, g, b);
-		} catch (final NumberFormatException e) {
-			System.err.println("KPropertyReader " + pKey + "=" + temp + " ist keine gültige Color");
+		if (tokenizer.countTokens() == 4) {
+			try {
+				r = Integer.parseInt(tokenizer.nextToken());
+				g = Integer.parseInt(tokenizer.nextToken());
+				b = Integer.parseInt(tokenizer.nextToken());
+				a = Integer.parseInt(tokenizer.nextToken());
+				System.out.println("rgba= " + r + " " + g + " " + b + " " + a);
+				c = new Color(r, g, b, a);
+			} catch (final NumberFormatException e) {
+				System.err.println("KPropertyReader " + pKey + "=" + temp + " ist keine gültige Color");
+				return pDefault;
+			}
+		} else if (tokenizer.countTokens() == 3) {
+			try {
+				r = Integer.parseInt(tokenizer.nextToken());
+				g = Integer.parseInt(tokenizer.nextToken());
+				b = Integer.parseInt(tokenizer.nextToken());
+				System.out.println("rgba= " + r + " " + g + " " + b);
+				c = new Color(r, g, b);
+			} catch (final NumberFormatException e) {
+				System.err.println("KPropertyReader " + pKey + "=" + temp + " ist keine gültige Color");
+				return pDefault;
+			}
+		} else
 			return pDefault;
-		}
 		return c;
 	}
 
