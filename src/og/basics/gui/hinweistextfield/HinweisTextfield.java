@@ -11,7 +11,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -26,32 +25,32 @@ import javax.swing.JTextField;
  * 
  */
 public class HinweisTextfield extends JTextField {
-	private static final long serialVersionUID = 1L;
+	private static final long	serialVersionUID			= 1L;
 
-	private static final String DEFAULT_HINWEIS = "<Text eingeben>";
+	private static final String	DEFAULT_HINWEIS				= "<Text eingeben>";
 	/**
 	 * Der Hinweistext, wenn das Feld leer ist
 	 */
-	private String hinweisTextWhenEmpty = DEFAULT_HINWEIS;
+	private String				hinweisTextWhenEmpty		= DEFAULT_HINWEIS;
 
-	private static final Color DEFAULT_COLOR_EMPTY = Color.GRAY;
+	private static final Color	DEFAULT_COLOR_EMPTY			= Color.GRAY;
 	/**
 	 * The Color of the Hinweis-String, when Textfield is empty
 	 */
-	private Color emptyTextColor = DEFAULT_COLOR_EMPTY;
+	private Color				emptyTextColor				= DEFAULT_COLOR_EMPTY;
 
-	private final ImageIcon DEFAULT_CLEAR_ICON = new ImageIcon(this.getClass().getResource("edit-clear.png"));
-	private final ImageIcon DEFAULT_CLEAR_ICON_ROLLOVER = new ImageIcon(this.getClass().getResource("edit-clear-activ.png"));
-	private final ImageIcon DEFAULT_INAKTIV_ICON = new ImageIcon(this.getClass().getResource("inaktiv.png"));
-	private ImageIcon clearIcon = DEFAULT_CLEAR_ICON;
-	private ImageIcon clearIconRollOver = DEFAULT_CLEAR_ICON_ROLLOVER;
-	private ImageIcon inactivIcon = DEFAULT_INAKTIV_ICON;
+	private final ImageIcon		DEFAULT_CLEAR_ICON			= new ImageIcon(this.getClass().getResource("edit-clear.png"));
+	private final ImageIcon		DEFAULT_CLEAR_ICON_ROLLOVER	= new ImageIcon(this.getClass().getResource("edit-clear-activ.png"));
+	private final ImageIcon		DEFAULT_INAKTIV_ICON		= new ImageIcon(this.getClass().getResource("inaktiv.png"));
+	private ImageIcon			clearIcon					= DEFAULT_CLEAR_ICON;
+	private ImageIcon			clearIconRollOver			= DEFAULT_CLEAR_ICON_ROLLOVER;
+	private ImageIcon			inactivIcon					= DEFAULT_INAKTIV_ICON;
 
 	/**
 	 * Hier wird ein JLabel als Button missbraucht :-), weil ein Button u.U. zu
 	 * gross ist.
 	 */
-	final JLabel clearButton = new JLabel(inactivIcon);
+	final JLabel				clearButton					= new JLabel(inactivIcon);
 
 	/**
 	 * Konstruktor
@@ -115,6 +114,7 @@ public class HinweisTextfield extends JTextField {
 		// FocusListener, damit das Suchfeld bei leerem Inhalt mit Hinweisstring
 		// gefüllt wird
 		addFocusListener(new FocusListener() {
+			@Override
 			public void focusLost(final FocusEvent arg0) {
 				// Hinweis anzeigen
 				if (getText().length() == 0) {
@@ -122,6 +122,7 @@ public class HinweisTextfield extends JTextField {
 				}
 			}
 
+			@Override
 			public void focusGained(final FocusEvent arg0) {
 				// Hinweis löschen bei erhalt vom Fokus
 				if (isEmpty()) {
@@ -214,7 +215,7 @@ public class HinweisTextfield extends JTextField {
 	 * @return
 	 */
 	public boolean isEmpty() {
-		if (getText().equals(hinweisTextWhenEmpty))
+		if (getText().equals(hinweisTextWhenEmpty) || getText().length() == 0)
 			return true;
 		return false;
 	}
@@ -275,7 +276,7 @@ public class HinweisTextfield extends JTextField {
 	 * 
 	 * @param clearIcon
 	 */
-	public void setClearIcon(ImageIcon clearIcon) {
+	public void setClearIcon(final ImageIcon clearIcon) {
 		if (clearIcon != null)
 			this.clearIcon = clearIcon;
 		else
@@ -294,7 +295,7 @@ public class HinweisTextfield extends JTextField {
 	 * 
 	 * @param clearIconRollOver
 	 */
-	public void setClearIconRollOver(ImageIcon clearIconRollOver) {
+	public void setClearIconRollOver(final ImageIcon clearIconRollOver) {
 		if (clearIconRollOver != null)
 			this.clearIconRollOver = clearIconRollOver;
 		else
@@ -313,7 +314,7 @@ public class HinweisTextfield extends JTextField {
 	 * 
 	 * @param inactivIcon
 	 */
-	public void setInactivIcon(ImageIcon inactivIcon) {
+	public void setInactivIcon(final ImageIcon inactivIcon) {
 		if (inactivIcon != null)
 			this.inactivIcon = inactivIcon;
 		else
