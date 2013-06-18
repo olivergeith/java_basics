@@ -186,8 +186,14 @@ class Rule {
  * This component draws two shapes, composed with a composition rule.
  */
 class CompositeComponent extends JComponent {
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= 1L;
+
 	public CompositeComponent() {
 		shape1 = new Ellipse2D.Double(100, 100, 150, 100);
+		shape1a = new Ellipse2D.Double(100, 200, 150, 100);
 		shape2 = new Rectangle2D.Double(150, 150, 150, 100);
 	}
 
@@ -200,6 +206,8 @@ class CompositeComponent extends JComponent {
 		gImage.setPaint(Color.red);
 		// gImage.setPaint(new Color(64, 64, 64, 10));
 		gImage.fill(shape1);
+		gImage.setPaint(new Color(255, 0, 0, 64));
+		gImage.fill(shape1a);
 		final AlphaComposite composite = AlphaComposite.getInstance(rule, alpha);
 		gImage.setComposite(composite);
 		// gImage.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_IN,
@@ -233,6 +241,7 @@ class CompositeComponent extends JComponent {
 
 	private int			rule;
 	private final Shape	shape1;
+	private final Shape	shape1a;
 	private final Shape	shape2;
 	private float		alpha;
 }
