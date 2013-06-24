@@ -349,7 +349,8 @@ public class KPropertyReader {
 				g = Integer.parseInt(tokenizer.nextToken());
 				b = Integer.parseInt(tokenizer.nextToken());
 				a = Integer.parseInt(tokenizer.nextToken());
-				System.out.println("rgba= " + r + " " + g + " " + b + " " + a);
+				// System.out.println("rgba= " + r + " " + g + " " + b + " " +
+				// a);
 				c = new Color(r, g, b, a);
 			} catch (final NumberFormatException e) {
 				System.err.println("KPropertyReader " + pKey + "=" + temp + " ist keine gültige Color");
@@ -360,7 +361,7 @@ public class KPropertyReader {
 				r = Integer.parseInt(tokenizer.nextToken());
 				g = Integer.parseInt(tokenizer.nextToken());
 				b = Integer.parseInt(tokenizer.nextToken());
-				System.out.println("rgba= " + r + " " + g + " " + b);
+				// System.out.println("rgba= " + r + " " + g + " " + b);
 				c = new Color(r, g, b);
 			} catch (final NumberFormatException e) {
 				System.err.println("KPropertyReader " + pKey + "=" + temp + " ist keine gültige Color");
